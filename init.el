@@ -2,6 +2,9 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
+(When (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize))
+
 ;(beacon-mode 1)
 
 ;(set-face-attribute 'default nil :font "M+ 1m-15" )
