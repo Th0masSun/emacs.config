@@ -2,13 +2,13 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(When (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize))
+;; max window on start
+(set-frame-parameter nil 'fullscreen 'fullboth)
+ 
+(beacon-mode 1)
 
-;(beacon-mode 1)
-
-;(set-face-attribute 'default nil :font "M+ 1m-15" )
-;(set-frame-font "M+ 1m-15" nil t)
+(set-face-attribute 'default nil :font "M+ 1m-17" )
+(set-frame-font "M+ 1m-17" nil t)
 
 
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
@@ -25,24 +25,48 @@
 (setq linum-format "%4d \u2502 ")
 (global-linum-mode 1)
 
+(require 'doom-themes)
+
+;; Global settings (defaults)
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+;; Load the theme (doom-one, doom-molokai, etc); keep in mind that each theme
+;; may have their own settings.
+;; (load-theme 'doom-nord t)
+(load-theme 'doom-solarized-light t)
+
+;; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+
+;; Enable custom neotree theme
+(doom-themes-neotree-config)  ; all-the-icons fonts must be installed!
+
+;; Corrects (and improves) org-mode's native fontification.
+(doom-themes-org-config)
+
+
 (require 'ido)
 (ido-mode t)
 (ido-everywhere t)
 
-;(require 'ido-completing-read+)
-;(ido-ubiquitous-mode 1)
-
-(global-set-key (kbd "C-x +") 'zoom)
+(require 'ido-completing-read+)
+(ido-ubiquitous-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" default)))
  '(package-selected-packages
    (quote
-    (org magit spaceline spaceline-all-the-icons hydra dumb-jump company helm counsel ivy swiper paradox)))
- '(paradox-github-token t))
+    (htmlize doom-themes zoom ido-completing-read+ beacon org magit spaceline spaceline-all-the-icons hydra dumb-jump company helm counsel ivy swiper paradox)))
+ '(paradox-github-token t)
+ '(zoom-mode t nil (zoom))
+ '(zoom-size (quote (0.618 . 0.618))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -74,6 +98,12 @@
 
 (require 'paradox)
 (paradox-enable)
+
+
+
+
+
+(global-set-key (kbd "C-x +") 'zoom)
 
 (require 'helm-config)
 (helm-mode 1)
